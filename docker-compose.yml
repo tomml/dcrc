@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web:
+    build: 
+      context: . # say docker compose to search the files to build for, here . (current directory)
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules #do not map node_modules from outside of the container to the node_modules folder inside of it. Because we do not need such volume mapping as the folder got deleted outside of the container.
+      - .:/app # map . aka 'the current folder outside of the container' to the 'app' folder inside of the  container
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/app
+    command: ["npm", "run", "test"]
+          
