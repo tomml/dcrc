@@ -9,3 +9,16 @@ before_install:
 
 script:
   - docker run -e CI=true thomasmschauer/dcrc npm run test
+
+deploy:
+  provider: elasticbeanstalk
+  region: "Here the region has to be set e.g. us-west-2. This region is part of the elasticbeanstalk link where the docker app gets deployed on AWS"
+  app: "The name of the app which is created on AWS"
+  env: "The environment name of the app"
+  bucket_name: "S3 in AWS"
+  bucket_path: ""
+  on:
+    branch: master 
+
+access_key_id: $AWS_ACCESS_KEY
+secret_access_key: $AWS_SECRET_KEY
